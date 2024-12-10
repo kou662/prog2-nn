@@ -81,17 +81,24 @@ for k in range(n_epoch):
     print(f'train loss: {loss_train:.3f}({time_end-time_start:.1f}s)',end=', ')
     loss_train_histry.append(loss_train)
 
+    time_start = time.time()
     loss_test = models.test(model, dataloader_test,loss_fn)
+    time_end = time.time()
     loss_test_histry.append(loss_test)
-    
-    acc_test = models.test_accuracy(model,dataloader_test)
-    print(f'test accuracy: {acc_test*100:.2f}%')
-    acc_test_histry.append(acc_test)
+    print(f'test loss: {loss_test:.3f}({time_end-time_start:.1f}s)')
 
     #精度を計算する
+    time_start = time.time()
     acc_train = models.test_accuracy(model,dataloader_train)
+    time_end = time.time()
     acc_train_histry.append(acc_train)
-    print(f'train accuracy: {acc_train*100:.2f}%')
+    print(f'train accuracy: {acc_train*100:.2f}%({time_end-time_start:.1f}s)')
+
+    time_start = time.time()
+    acc_test = models.test_accuracy(model,dataloader_test)
+    time_end = time.time()
+    print(f'test accuracy: {acc_test*100:.2f}%({time_end-time_start:.1f}s)')
+    acc_test_histry.append(acc_test)
 
 plt.plot(acc_train_histry,label='train')
 plt.plot(acc_test_histry,label='test')
